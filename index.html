@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Một Món Quà Nhỏ • 20.10 - A2k73</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 48%, #fff6f9 0%, #fce8ef 48%, #f5d4e0 100%);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #6d283b;
+            position: relative;
+            user-select: none;
+        }
+
+        /* Chữ 20.10 chìm khổng lồ ở chính giữa nền */
+        .bg-watermark {
+            position: fixed;
+            top: 53%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-weight: 700;
+            font-size: clamp(11rem, 26vw, 22rem);
+            color: rgba(185, 130, 145, 0.13);
+            letter-spacing: 4px;
+            pointer-events: none;
+            z-index: 1;
+            white-space: nowrap;
+        }
+
+        /* Cánh hoa nhỏ bay lơ lửng trên nền */
+        #petals-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .petal-dot {
+            position: absolute;
+            border-radius: 50% 20% 50% 20%;
+            background: rgba(212, 130, 152, 0.4);
+            pointer-events: none;
+            animation: driftPetal linear infinite;
+        }
+
+        @keyframes driftPetal {
+            0% {
+                transform: translateY(-5vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            20% { opacity: 0.6; }
+            80% { opacity: 0.6; }
+            100% {
+                transform: translateY(105vh) translateX(40px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Các ngôi sao vẽ tay màu vàng trang trí */
+        .doodle-star {
+            position: fixed;
+            width: 72px;
+            height: 72px;
+            pointer-events: none;
+            z-index: 3;
+            opacity: 0.9;
+            animation: twinkleStar 3s ease-in-out infinite alternate;
+        }
+        .star-1 { top: 18%; left: 5%; transform: rotate(-12deg) scale(0.9); }
+        .star-2 { top: 7%; right: 6%; transform: rotate(10deg) scale(1.1); }
+        .star-3 { bottom: 18%; right: 6%; transform: rotate(18deg) scale(0.85); }
+        .star-4 { bottom: 6%; left: 7%; transform: rotate(-8deg) scale(0.95); }
+        .star-5 { bottom: 4%; right: 16%; transform: rotate(14deg) scale(1); }
+
+        @keyframes twinkleStar {
+            0% { transform: scale(0.95) rotate(-5deg); }
+            100% { transform: scale(1.06) rotate(5deg); }
+        }
+
+        /* ================= TIÊU ĐỀ TRÊN CÙNG (TO RÕ CHO TV) ================= */
+        .top-header-block {
+            position: fixed;
+            top: 7%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 10;
+            width: 92%;
+            max-width: 900px;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .top-header-block.hidden-header {
+            opacity: 0;
+            transform: translate(-50%, -20px);
+            pointer-events: none;
+        }
+
+        .small-caps-sub {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #9c5d6e;
+            margin-bottom: 12px;
+            font-weight: 800;
+        }
+
+        .main-serif-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.8rem, 5.5vw, 4.4rem);
+            line-height: 1.12;
+            color: #7c283e;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .main-serif-title .italic-line {
+            display: block;
+            font-style: italic;
+            font-weight: 700;
+            color: #9e3f58;
+        }
+
+        .gentle-desc {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #874959;
+        }
+
+        /* ================= CẢNH 1: BÓ HOA TULIP HỒNG ================= */
+        .stage-center {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 12;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .stage-center.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.92);
+        }
+
+        .bouquet-wrapper {
+            margin-top: 130px;
+            cursor: pointer;
+            position: relative;
+            animation: floatBouquet 3.6s ease-in-out infinite;
+            transition: transform 0.35s ease;
+            filter: drop-shadow(0 20px 32px rgba(160, 75, 100, 0.25));
+        }
+
+        .bouquet-wrapper:hover {
+            transform: scale(1.06);
+        }
+
+        @keyframes floatBouquet {
+            0%, 100% { transform: translateY(0px) rotate(-1deg); }
+            50% { transform: translateY(-12px) rotate(1.5deg); }
+        }
+
+        .click-hint {
+            text-align: center;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #8c374e;
+            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.78);
+            padding: 8px 22px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(140, 55, 78, 0.12);
+            animation: pulseHint 2s infinite;
+        }
+
+        @keyframes pulseHint {
+            0%, 100% { transform: scale(0.98); opacity: 0.8; }
+            50% { transform: scale(1.03); opacity: 1; }
+        }
+
+        /* ================= CẢNH 2: MODAL LÁ THƯ (PHÓNG TO RÕ CHO TV) ================= */
+        .letter-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(240, 200, 214, 0.55);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.45s ease;
+            padding: 24px;
+        }
+
+        .letter-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .letter-paper {
+            background: #fffdfd;
+            width: 100%;
+            max-width: 800px;
+            border-radius: 18px;
+            padding: 34px 44px 36px;
+            box-shadow: 0 25px 65px rgba(130, 50, 75, 0.25);
+            border: 2px solid rgba(235, 195, 208, 0.9);
+            position: relative;
+            transform: translateY(20px) scale(0.96);
+            transition: transform 0.45s ease;
+        }
+
+        .letter-overlay.open .letter-paper {
+            transform: translateY(0) scale(1);
+        }
+
+        .letter-top-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+            border-bottom: 1px solid #f5e1e7;
+            padding-bottom: 12px;
+        }
+
+        .letter-meta-text {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: #9e6374;
+            font-weight: 800;
+        }
+
+        .letter-close {
+            background: #fceef2;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #883c50;
+            cursor: pointer;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Ảnh Polaroid cô giáo nghiêng bên trái lá thư */
+        .letter-polaroid {
+            float: left;
+            width: 230px;
+            background: #ffffff;
+            padding: 10px 10px 28px 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.16);
+            transform: rotate(-3deg);
+            margin: 6px 28px 16px 4px;
+            border: 1px solid #ecdce0;
+            border-radius: 4px;
+        }
+
+        .letter-polaroid img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            object-position: center 20%;
+            display: block;
+            border-radius: 2px;
+        }
+
+        .letter-salutation {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem;
+            font-style: italic;
+            font-weight: 700;
+            color: #882942;
+            margin-bottom: 14px;
+        }
+
+        .letter-paragraphs p {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.65;
+            color: #42252d;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .letter-sign {
+            clear: both;
+            text-align: right;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: #882942;
+            margin-top: 8px;
+            margin-bottom: 18px;
+            padding-right: 16px;
+        }
+
+        .btn-open-gift {
+            display: block;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #d15676 0%, #a83253 100%);
+            color: #fff;
+            border: none;
+            padding: 15px 38px;
+            border-radius: 50px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 22px rgba(168, 50, 83, 0.38);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .btn-open-gift:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 26px rgba(168, 50, 83, 0.5);
+        }
+
+        /* ================= CẢNH 3 & 4: HỘP QUÀ & 3 ẢNH LỚP TO RÕ ================= */
+        .gift-stage {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 20;
+            display: none;
+        }
+
+        .gift-stage.active {
+            display: block;
+        }
+
+        .gift-box-container {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 155px;
+            height: 155px;
+            cursor: pointer;
+            pointer-events: auto;
+            z-index: 25;
+            animation: gentleShake 2.8s ease-in-out infinite;
+            transition: bottom 0.7s ease, transform 0.7s ease;
+        }
+
+        .gift-box-container.opened {
+            animation: none;
+            cursor: default;
+            bottom: 12px;
+            transform: translateX(-50%) scale(0.86);
+        }
+
+        @keyframes gentleShake {
+            0%, 100% { transform: translateX(-50%) rotate(0deg); }
+            20% { transform: translateX(-50%) rotate(-3deg) translateY(-4px); }
+            40% { transform: translateX(-50%) rotate(3deg) translateY(-4px); }
+            60% { transform: translateX(-50%) rotate(-1.5deg); }
+        }
+
+        .gift-glow {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(255, 238, 195, 0.9) 0%, rgba(255, 210, 225, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transition: transform 0.8s ease;
+            z-index: 1;
+        }
+
+        .gift-box-container.opened .gift-glow {
+            transform: translateX(-50%) scale(1.6);
+        }
+
+        .gift-lid {
+            position: absolute;
+            top: 12px;
+            left: 5px;
+            width: 145px;
+            height: 54px;
+            z-index: 4;
+            transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+            transform-origin: center bottom;
+        }
+
+        .gift-box-container.opened .gift-lid {
+            transform: translate(-10px, -48px) rotate(-14deg);
+        }
+
+        .gift-base {
+            position: absolute;
+            bottom: 0;
+            left: 14px;
+            width: 128px;
+            height: 95px;
+            z-index: 3;
+        }
+
+        #flying-items-layer {
+            position: fixed;
+            top: 3%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 96vw;
+            max-width: 1560px;
+            height: 76vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2.2vw;
+            pointer-events: none;
+            z-index: 30;
+        }
+
+        .memory-column {
+            flex: 1;
+            max-width: 470px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            opacity: 0;
+            transform: translateY(220px) scale(0.25);
+            transition: all 1.05s cubic-bezier(0.2, 0.9, 0.3, 1);
+            pointer-events: auto;
+        }
+
+        .memory-column.show {
+            opacity: 1;
+        }
+
+        .polaroid-frame {
+            width: 100%;
+            background: #ffffff;
+            padding: 12px 12px 24px 12px;
+            border-radius: 10px;
+            box-shadow: 0 18px 45px rgba(120, 45, 70, 0.24);
+            border: 2px solid #fff;
+            cursor: pointer;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .polaroid-frame:hover {
+            transform: translateY(-8px) scale(1.04) !important;
+            box-shadow: 0 24px 55px rgba(120, 45, 70, 0.36);
+        }
+
+        .polaroid-frame img {
+            width: 100%;
+            height: 44vh;
+            max-height: 410px;
+            min-height: 250px;
+            object-fit: cover;
+            border-radius: 6px;
+            display: block;
+            background: #fdf2f5;
+        }
+
+        .polaroid-frame.collage-photo img {
+            object-fit: contain;
+            background: #fff8fa;
+        }
+
+        .caption-pill {
+            background: #ffffff;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: clamp(1rem, 1.35vw, 1.32rem);
+            color: #882942;
+            box-shadow: 0 10px 28px rgba(140, 55, 80, 0.2);
+            border: 2px solid #f4c6d5;
+            text-align: center;
+            line-height: 1.35;
+            width: fit-content;
+            max-width: 100%;
+        }
+
+        .lightbox-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(45, 15, 25, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 18px;
+            padding: 30px;
+            cursor: zoom-out;
+        }
+
+        .lightbox-modal.active {
+            display: flex;
+        }
+
+        .lightbox-modal img {
+            max-width: 90vw;
+            max-height: 80vh;
+            border: 10px solid #fff;
+            border-radius: 12px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.5);
+            object-fit: contain;
+            background: #fff;
+        }
+
+        .lightbox-caption {
+            background: #fff;
+            color: #882942;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-size: 1.45rem;
+            font-weight: 800;
+        }
+
+        /* Nút bật/tắt âm thanh góc dưới phải */
+        .sound-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 22px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(136, 41, 66, 0.7);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            z-index: 70;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            backdrop-filter: blur(4px);
+        }
+
+        @media (max-width: 900px) {
+            #flying-items-layer {
+                flex-direction: column;
+                height: 82vh;
+                overflow-y: auto;
+                padding: 15px;
+            }
+            .polaroid-frame img { height: 220px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Chữ 20.10 chìm giữa nền -->
+    <div class="bg-watermark">20.10</div>
+
+    <!-- Lớp cánh hoa rơi nhẹ -->
+    <div id="petals-layer"></div>
+
+    <!-- 5 ngôi sao vẽ tay màu vàng -->
+    <svg class="doodle-star star-1" viewBox="0 0 100 100">
+        <path d="M50 8 L63 88 L12 36 L88 36 L32 88 Z" fill="none" stroke="#ffcf1b" stroke-width="6.5" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+    <svg class="doodle-star star-2" viewBox="0 0 100 100">
+        <path d="M50 8 L63 88 L12 36 L88 36 L32 88 Z" fill="none" stroke="#ffcf1b" stroke-width="6.5" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+    <svg class="doodle-star star-3" viewBox="0 0 100 100">
+        <path d="M50 8 L63 88 L12 36 L88 36 L32 88 Z" fill="none" stroke="#ffcf1b" stroke-width="6.5" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+    <svg class="doodle-star star-4" viewBox="0 0 100 100">
+        <path d="M50 8 L63 88 L12 36 L88 36 L32 88 Z" fill="none" stroke="#ffcf1b" stroke-width="6.5" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+    <svg class="doodle-star star-5" viewBox="0 0 100 100">
+        <path d="M50 8 L63 88 L12 36 L88 36 L32 88 Z" fill="none" stroke="#ffcf1b" stroke-width="6.5" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+
+    <!-- Khối tiêu đề phía trên -->
+    <header class="top-header-block" id="topHeader">
+        <div class="small-caps-sub" id="subCaps">GỬI NGƯỜI PHỤ NỮ ĐẶC BIỆT</div>
+        <h1 class="main-serif-title" id="mainTitle">
+            Một món quà nhỏ.
+            <span class="italic-line">Ngàn điều yêu thương.</span>
+        </h1>
+        <p class="gentle-desc" id="gentleDesc">
+            Hôm nay, những điều dịu dàng nhất đều dành cho cô và các bạn.
+        </p>
+    </header>
+
+    <!-- ================= CẢNH 1: BÓ HOA TULIP HỒNG ================= -->
+    <div class="stage-center" id="bouquetStage">
+        <div class="bouquet-wrapper" onclick="openLetterModal()" title="Nhấn vào bó hoa để mở thư">
+            <svg width="320" height="370" viewBox="0 0 300 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M65 140 L150 65 L235 140 L185 255 L115 255 Z" fill="#f7efe6" stroke="#eadbcf" stroke-width="1.5"/>
+                <path d="M50 165 L120 95 L165 250 L95 245 Z" fill="#fdf8f2"/>
+                <path d="M250 165 L180 95 L135 250 L205 245 Z" fill="#fdf8f2"/>
+                <path d="M135 250 L122 308 M143 250 L132 312 M150 250 L142 315 M157 250 L152 313 M165 250 L161 309" stroke="#537d3b" stroke-width="6.5" stroke-linecap="round"/>
+                <path d="M105 190 Q85 130 115 85 Q125 140 135 195 Z" fill="#4f7c38"/>
+                <path d="M195 190 Q215 130 185 85 Q175 140 165 195 Z" fill="#4f7c38"/>
+                <path d="M150 180 Q150 105 150 70 Q165 125 160 180 Z" fill="#639149"/>
+                <g>
+                    <g transform="translate(122, 72) rotate(-10)">
+                        <ellipse cx="18" cy="22" rx="16" ry="22" fill="#f47b96"/>
+                        <path d="M4 18 Q18 38 32 18 Q26 42 18 42 Q10 42 4 18 Z" fill="#fda4ba"/>
+                    </g>
+                    <g transform="translate(155, 68) rotate(8)">
+                        <ellipse cx="18" cy="22" rx="16" ry="22" fill="#f06c89"/>
+                        <path d="M4 18 Q18 38 32 18 Q26 42 18 42 Q10 42 4 18 Z" fill="#fc9bb2"/>
+                    </g>
+                    <g transform="translate(92, 105) rotate(-22)">
+                        <ellipse cx="18" cy="22" rx="16" ry="22" fill="#f5839d"/>
+                        <path d="M4 18 Q18 38 32 18 Q26 42 18 42 Q10 42 4 18 Z" fill="#ffb3c6"/>
+                    </g>
+                    <g transform="translate(132, 108) rotate(-4)">
+                        <ellipse cx="19" cy="23" rx="17" ry="23" fill="#eb5e7d"/>
+                        <path d="M4 18 Q19 40 34 18 Q28 44 19 44 Q10 44 4 18 Z" fill="#fc97b0"/>
+                    </g>
+                    <g transform="translate(172, 105) rotate(16)">
+                        <ellipse cx="18" cy="22" rx="16" ry="22" fill="#f47b96"/>
+                        <path d="M4 18 Q18 38 32 18 Q26 42 18 42 Q10 42 4 18 Z" fill="#fda4ba"/>
+                    </g>
+                    <g transform="translate(76, 146) rotate(-28)">
+                        <ellipse cx="18" cy="22" rx="16" ry="22" fill="#ee6886"/>
+                        <path d="M4 18 Q18 38 32 18 Q26 42 18 42 Q10 42 4 18 Z" fill="#fca2b8"/>
+                    </g>
+                    <g transform="translate(115, 145) rotate(-12)">
+                        <ellipse cx="19" cy="23" rx="17" ry="23" fill="#f78da5"/>
+                        <path d="M4 18 Q19 40 34 18 Q28 44 19 44 Q10 44 4 18 Z" fill="#ffbdcd"/>
+                    </g>
+                    <g transform="translate(152, 142) rotate(6)">
+                        <ellipse cx="19" cy="23" rx="17" ry="23" fill="#e85273"/>
+                        <path d="M4 18 Q19 40 34 18 Q28 44 19 44 Q10 44 4 18 Z" fill="#f98ca6"/>
+                    </g>
+                    <g transform="translate(188, 144) rotate(24)">
+                        <ellipse cx="18" cy="22" rx="16" ry="22" fill="#f47b96"/>
+                        <path d="M4 18 Q18 38 32 18 Q26 42 18 42 Q10 42 4 18 Z" fill="#fda4ba"/>
+                    </g>
+                </g>
+                <path d="M68 175 Q115 215 150 252 L118 265 Q85 225 68 175 Z" fill="#fffaf3" stroke="#eddcd0" stroke-width="1"/>
+                <path d="M232 175 Q185 215 150 252 L182 265 Q215 225 232 175 Z" fill="#f7ece1" stroke="#e5d2c4" stroke-width="1"/>
+                <path d="M98 205 L150 245 L202 205 L175 270 L125 270 Z" fill="#fdf6ee"/>
+                <path d="M142 252 C110 230, 95 268, 138 262 Z" fill="#df8b99"/>
+                <path d="M158 252 C190 230, 205 268, 162 262 Z" fill="#d47a89"/>
+                <path d="M142 258 L112 318 L128 322 L148 262 Z" fill="#df8b99"/>
+                <path d="M156 258 L186 326 L168 330 L150 262 Z" fill="#c96d7c"/>
+                <rect x="142" y="248" width="16" height="14" rx="5" fill="#e89aa7"/>
+            </svg>
+            <div class="click-hint">✨ Nhấn vào bó hoa để mở thư ✨</div>
+        </div>
+    </div>
+
+    <!-- ================= CẢNH 2: MODAL LÁ THƯ ================= -->
+    <div class="letter-overlay" id="letterModal">
+        <div class="letter-paper">
+            <div class="letter-top-meta">
+                <span class="letter-meta-text">MỘT LÁ THƯ NHỎ • NGÀY 20 THÁNG 10</span>
+                <button class="letter-close" onclick="closeLetterModal()">×</button>
+            </div>
+
+            <div class="letter-polaroid">
+                <img id="letterMainPhoto" src="cogiao.jpg" alt="Ảnh cô giáo">
+            </div>
+
+            <h2 class="letter-salutation" id="letterGreeting">Gửi Cô Quế Hương,</h2>
+
+            <div class="letter-paragraphs">
+                <p>Đầu năm đến nay tụi em vẫn chưa giúp được gì cho Cô và lớp, nhân ngày lễ này tụi em cũng sẽ thay đổi và cũng cố gắng hơn, những lời Cô dặn là những bài học tụi em cần tiếp thu và học hỏi, tụi em chúc Cô Hương có một ngày lễ 20/10 như những người con gái khác,</p>
+                <p>tuy Cô không muốn bất cứ điều gì nhưng thứ tụi em có thể làm là chúc Cô nhiều sức khỏe, luôn vui vẻ, mong Cô có thể gắn bó vs lớp lâu hơn và cùng lớp đạt được nhiều thành tựu hơn 💗</p>
+            </div>
+
+            <div class="letter-sign" id="letterSignature">Tập thể A2k73</div>
+
+            <button class="btn-open-gift" onclick="goToGiftBoxStage()">
+                🎁 Mở món quà dành cho bạn ✨
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= CẢNH 3 & 4: HỘP QUÀ & 3 ẢNH LỚP ================= -->
+    <div class="gift-stage" id="giftStage">
+        <div id="flying-items-layer"></div>
+
+        <div class="gift-box-container" id="giftBox" onclick="openGiftBox()" title="Nhấn để mở hộp quà">
+            <div class="gift-glow"></div>
+
+            <svg class="gift-lid" viewBox="0 0 130 55" fill="none">
+                <path d="M65 24 C40 2, 28 24, 62 26 Z" fill="#fdf5e6" stroke="#e2cfa9" stroke-width="1.5"/>
+                <path d="M65 24 C90 2, 102 24, 68 26 Z" fill="#fdf5e6" stroke="#e2cfa9" stroke-width="1.5"/>
+                <circle cx="65" cy="24" r="4.5" fill="#f3dfb6"/>
+                <rect x="5" y="25" width="120" height="24" rx="3" fill="#f4b8cb" stroke="#df9bb1" stroke-width="1"/>
+                <rect x="56" y="25" width="18" height="24" fill="#f7e5c4"/>
+            </svg>
+
+            <svg class="gift-base" viewBox="0 0 116 86" fill="none">
+                <rect x="4" y="0" width="108" height="84" rx="4" fill="#eab0c3" stroke="#d594aa" stroke-width="1"/>
+                <rect x="84" y="0" width="28" height="84" rx="2" fill="#d999ae"/>
+                <rect x="49" y="0" width="18" height="84" fill="#f2dcb3"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Khung phóng to ảnh toàn màn hình -->
+    <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox()">
+        <img id="lightboxImg" src="" alt="Phóng to">
+        <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+
+    <!-- Nút âm thanh góc phải dưới -->
+    <button class="sound-btn" id="soundBtn" onclick="toggleAudio()" title="Bật/Tắt nhạc">🔊</button>
+
+    <!-- SỬ DỤNG FILE NHẠC MP3 TRỰC TIẾP -->
+    <audio id="bgMusic" loop>
+        <source src="nhac.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const CONFIG = {
+            letterPhoto: "cogiao.jpg",
+            memories: [
+                {
+                    src: "anh2.jpg",
+                    caption: "Chúc mừng ngày 20/10 thật nhiều niềm vui! ✨",
+                    rotate: "-3deg",
+                    isCollage: false
+                },
+                {
+                    src: "anh3.jpg",
+                    caption: "Mọi dịu dàng dành cho cô và các bạn 🌸",
+                    rotate: "0deg",
+                    isCollage: true
+                },
+                {
+                    src: "anh4.jpg",
+                    caption: "Luôn rạng rỡ như những đóa hoa nhé! 💖",
+                    rotate: "3deg",
+                    isCollage: false
+                }
+            ]
+        };
+
+        document.getElementById('letterMainPhoto').src = CONFIG.letterPhoto;
+
+        let giftOpened = false;
+
+        function openLetterModal() {
+            startMusicIfNotPlaying();
+            document.getElementById('letterModal').classList.add('open');
+        }
+
+        function closeLetterModal() {
+            document.getElementById('letterModal').classList.remove('open');
+        }
+
+        function goToGiftBoxStage() {
+            closeLetterModal();
+            document.getElementById('bouquetStage').classList.add('hidden');
+
+            document.getElementById('subCaps').innerText = "DÀNH TẶNG PHÁI ĐẸP • VỚI TẤT CẢ YÊU THƯƠNG";
+            document.getElementById('mainTitle').innerHTML = `
+                Một chút bất ngờ.
+                <span class="italic-line" style="font-weight:700; color:#7c283e;">Chờ bạn tự tay mở.</span>
+            `;
+            document.getElementById('gentleDesc').innerText = "Nhấn vào hộp quà bên dưới để mở điều bất ngờ nhé!";
+
+            document.getElementById('giftStage').classList.add('active');
+        }
+
+        function openGiftBox() {
+            if (giftOpened) return;
+            giftOpened = true;
+
+            document.getElementById('topHeader').classList.add('hidden-header');
+
+            const giftBox = document.getElementById('giftBox');
+            giftBox.classList.add('opened');
+
+            const layer = document.getElementById('flying-items-layer');
+
+            CONFIG.memories.forEach((item, idx) => {
+                const col = document.createElement('div');
+                col.className = 'memory-column';
+
+                const frameClass = item.isCollage ? 'polaroid-frame collage-photo' : 'polaroid-frame';
+                col.innerHTML = `
+                    <div class="${frameClass}" style="transform: rotate(${item.rotate});" onclick="openLightbox('${item.src}', '${item.caption}')" title="Nhấn vào ảnh để phóng to toàn màn hình">
+                        <img src="${item.src}" alt="Ảnh kỷ niệm lớp">
+                    </div>
+                    <div class="caption-pill">${item.caption}</div>
+                `;
+                layer.appendChild(col);
+
+                setTimeout(() => {
+                    col.classList.add('show');
+                    col.style.transform = `translateY(0) scale(1)`;
+                }, 180 + idx * 280);
+            });
+        }
+
+        function openLightbox(src, caption) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightboxCaption').innerText = caption;
+            document.getElementById('lightboxModal').classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightboxModal').classList.remove('active');
+        }
+
+        // ================= HỆ THỐNG PHÁT NHẠC BẰNG FILE MP3 =================
+        let isPlaying = false;
+
+        function startMusicIfNotPlaying() {
+            if (!isPlaying) toggleAudio();
+        }
+
+        function toggleAudio() {
+            const btn = document.getElementById('soundBtn');
+            const audio = document.getElementById('bgMusic');
+
+            if (!isPlaying) {
+                audio.volume = 0.8;
+                audio.play().then(() => {
+                    isPlaying = true;
+                    btn.innerText = '🔊';
+                }).catch(() => {});
+            } else {
+                audio.pause();
+                isPlaying = false;
+                btn.innerText = '🔇';
+            }
+        }
+
+        // Tạo hiệu ứng cánh hoa nhỏ bay trên nền
+        function createPetal() {
+            const layer = document.getElementById('petals-layer');
+            const p = document.createElement('div');
+            p.className = 'petal-dot';
+            const size = Math.random() * 7 + 5;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = (Math.random() * 7 + 8) + 's';
+            layer.appendChild(p);
+            setTimeout(() => p.remove(), 15000);
+        }
+
+        for (let i = 0; i < 18; i++) createPetal();
+        setInterval(createPetal, 800);
+    </script>
+</body>
+</html>
